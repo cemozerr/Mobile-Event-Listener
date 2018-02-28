@@ -3,7 +3,7 @@ var Web3 = require('web3');
 var web3 = new Web3(new Web3.providers.HttpProvider("HTTP://127.0.0.1:7545"));
 
 // use hardcoded contract build & address
-var abi = require("./build/contracts/ClientReceipt").abi;
+var build = require("./build/contracts/ClientReceipt");
 var abi = build.abi;
 var ClientReceipt = web3.eth.contract(abi);
 var clientReceipt = ClientReceipt.at(build.networks['5777'].address);
