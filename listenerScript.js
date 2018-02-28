@@ -1,3 +1,5 @@
+var fetch = require('node-fetch');
+
 // initialize web3
 var Web3 = require('web3');
 var web3 = new Web3(new Web3.providers.HttpProvider("HTTP://127.0.0.1:7545"));
@@ -11,6 +13,19 @@ var event = clientReceipt.Deposit();
 
 // watch for event emissions
 event.watch(function(error, result){
-    if (!error)
+    if (!error) {
         console.log(result);
+        fetch('http://127.0.0.1:5000/' + 'addEvent', {
+            method: "POST",
+            body: JSON.stringify({
+                transactionHash: result.transactionHash,
+                blockNumber: result.blockNumber,
+                event: result.event,
+                date: Date.now()
+            }),
+            headers: {
+                "Content-Type": "application/json"
+            }
+        })
+    }
 });
