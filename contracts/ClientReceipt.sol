@@ -7,6 +7,12 @@ contract ClientReceipt {
         uint _value
     );
 
+    event Pay(
+        address indexed _from,
+        bytes32 indexed _id,
+        uint _value
+    );
+
     function deposit(bytes32 _id) public payable {
         // Events are emitted using `emit`, followed by
         // the name of the event and the arguments
@@ -14,5 +20,9 @@ contract ClientReceipt {
         // (even deeply nested) can be detected from
         // the JavaScript API by filtering for `Deposit`.
         Deposit(msg.sender, _id, msg.value);
+    }
+
+    function pay(bytes32 _id) public payable {
+        Pay(msg.sender, _id, msg.value);
     }
 }
